@@ -1,0 +1,75 @@
+#xframe-warn			{ 
+	position:fixed;
+	width:80%; 
+	left:10%;
+	top:1em;
+	height:1em; 
+	border:4px solid #eee; 	
+}
+
+#xframe 					{ 
+	position:fixed;
+	width:80%; 
+	left:10%;
+	top:3em;
+	height:6em; 	
+	border:4px solid #eee; 	
+	border-top:0;
+}
+
+
+
+#xframe 					{ 
+	display:none; 
+}
+#xframe.pending 	{ 
+	display:block; 
+	background-color:#dddddd; 	
+}
+#xframe.success 	{ 
+	display:block; 
+	background-color:#bbffbb; 	
+}
+#xframe.error 		{ 
+	display:block; 
+	background-color:#ffbbbb; 		
+}
+	#xframe header 	{ 
+		cursor:pointer;
+		height:1em; padding:.5em 0 .5em .5em; 
+		background-color:#eee; 
+		font-size:small;
+		line-height:1em;
+	}
+	#xframe-status 	{ 
+		text-transform:uppercase;
+		font-weight:bold;
+	}
+	#xframe-queue 	{ 
+		float:right;
+		padding:0 1em;
+	}
+	#xframe-close 		{ 
+		float:right; 
+	}
+	#xframe-close:before {
+		content:"\00274C";
+	}
+	#xframe iframe		{ 
+		width:100%; height:4em; 
+		border:0px none; 	
+	}
+	
+#xframe-warn			{ 
+	cursor:pointer;
+	background-color:#eee; 
+	font-size:small;
+	line-height:1em;	
+	padding:.25em 0;
+	text-align:center;
+	display:none; 
+}
+#xframe-warn:before {
+	float:right;
+	content:"\00274C";
+}

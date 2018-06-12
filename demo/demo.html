@@ -1,0 +1,56 @@
+<html>	
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="../xframe.js"></script>
+		<link rel="stylesheet" type="text/css" href="../xframe.css">
+		<script>
+			$(document).ready(function() {
+				XFrame.init();
+			});
+		</script>
+		<style type="text/css">
+			body { font-family:sans-serif; }
+			button.success { background-color:green; }
+			button.error { background-color:red; }
+		</style>
+	</head>
+	<body>
+	
+		<h1>XFrame Demo</h1>
+		<p>
+			XFrame ('Executive Frame') provides an iframe in the page 
+			on which it is embedded that allows you to exec() serverside 
+			GET requests without leaving the current page. By default it's
+			hidden, but when a request is made it is made visible to
+			show the result. 
+		</p><p>		
+			The resulting page (which is inside the iframe) can call
+			parent.XFrame.success() or parent.XFrame.error() to
+			finish the request and have the iframe hidden after 
+			a small timeout.
+		</p><p>
+			XFrame supports a queue, so multiple requests can
+			be made in succession without interrupting eachother.
+		</p>
+		<p>
+			XFrame requires jQuery. In some browsers, it
+			can not run on local filesystem due to security restrictions.
+		</p>
+		<form onsubmit="return false">
+			<button onclick="XFrame.exec('success.html')">success</button>
+			<button onclick="XFrame.exec('error.html')">error</button><br>
+			
+			<button onclick="XFrame.exec('success.html',function(code,msg) {alert(code+':'+msg)},function(code,msg) {alert(code+':'+msg)})">success + alert</button>
+			<button onclick="XFrame.exec('error.html',function(code,msg) {alert(code+':'+msg)},function(code,msg) {alert(code+':'+msg)})">error + alert</button>
+			<br>
+			
+			
+			<button onclick="XFrame.exec('success.html',function() {$(this).attr('class','success')},function() {$(this).attr('class','error')}, this)">success + feedback</button>
+			<button onclick="XFrame.exec('error.html',function() {$(this).attr('class','success')},function() {$(this).attr('class','error')}, this)">error + feedback</button>
+			<br>
+			
+			<button onclick="XFrame.warn('&lt;a href=&quot;javascript:window.location.reload()&quot;&gt;press reload&lt;/a&gt; to view changes.')">show warning</button>
+			<button onclick="XFrame.unwarn()">hide warning</button>
+		</form>
+	</body>
+</html>
