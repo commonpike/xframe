@@ -69,7 +69,10 @@
 	text-align:center;
 	display:none; 
 }
-#xframe-warn:before {
+#xframe-warn-content {
+	width:100%;
+}
+#xframe-warn-content:before {
 	float:right;
 	content:"\00274C";
 }
