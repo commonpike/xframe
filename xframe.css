@@ -4,7 +4,7 @@
 	left:10%;
 	top:1em;
 	height:1em; 
-	border:4px solid #a2b5cd; 	
+	border:4px solid #eee; 	
 }
 
 #xframe 					{ 
@@ -13,7 +13,7 @@
 	left:10%;
 	top:3em;
 	height:6em; 	
-	border:4px solid #a2b5cd; 	
+	border:4px solid #eee; 	
 	border-top:0;
 }
 
@@ -24,23 +24,20 @@
 }
 #xframe.pending 	{ 
 	display:block; 
-	background-color:#efefef; 	
-	color:black;
+	background-color:#dddddd; 	
 }
 #xframe.success 	{ 
 	display:block; 
-	background-color:#008000; 	
-	color:white;
+	background-color:#bbffbb; 	
 }
 #xframe.error 		{ 
 	display:block; 
-	background-color:#ff0000; 
-	color:white;
+	background-color:#ffbbbb; 		
 }
 	#xframe header 	{ 
 		cursor:pointer;
 		height:1em; padding:.5em 0 .5em .5em; 
-		background-color:#a2b5cd; 
+		background-color:#eee; 
 		font-size:small;
 		line-height:1em;
 	}
@@ -57,17 +54,12 @@
 	}
 	#xframe-close:before {
 		content:"\00274C";
-		color:#ff0000;
 	}
 	#xframe iframe		{ 
 		width:100%; height:4em; 
 		border:0px none; 	
 	}
-
-body.xframe {
-	color:white;
-}
-
+	
 #xframe-warn			{ 
 	cursor:pointer;
 	background-color:#eee; 
@@ -80,5 +72,4 @@ body.xframe {
 #xframe-warn:before {
 	float:right;
 	content:"\00274C";
-	color:#ff0000;
 }
