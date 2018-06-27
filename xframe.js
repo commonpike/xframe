@@ -19,6 +19,10 @@
 	
 */
 
+jQuery(document).ready(function() {
+	XFrame.init();
+});
+
 var XFrame = {
 	
 	config	: {
@@ -139,6 +143,7 @@ var XFrame = {
 	},
 	
 	hide			: function() {
+		this.$iframe.attr('src','');
 		this.$xframe.hide();
 	},
 	
