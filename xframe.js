@@ -2,18 +2,18 @@
 
 	requires: jQuery
 	
-	XFrame ('Executive Frame') provides an iframe in the page 
+	xFrame ('Executive Frame') provides an iframe in the page 
 	on which it is embedded that allows you to exec() serverside 
 	GET requests without leaving the current page. By default it's
 	hidden, but when a request is made it is made visible to
 	show the result. 
 
 	The resulting page (which is inside the iframe) can call
-	parent.XFrame.success() or parent.XFrame.error() to
+	parent.xFrame.success() or parent.xFrame.error() to
 	finish the request and have the iframe hidden after 
 	a small timeout.
 
-	XFrame supports a queue, so multiple requests can
+	xFrame supports a queue, so multiple requests can
 	be made in succession without interupting eachother.
 	
 	
@@ -21,12 +21,13 @@
 
 
 jQuery(document).ready(function() {
-	XFrame.init();
+	xFrame.init();
 });
 
-var XFrame = {
+var xFrame = {
 	
 	config	: {
+		css						: '',
 		defcontext		: window,
 		defmethod			: 'GET',
 		defsuccess		: function(code,msg) { },
@@ -34,13 +35,8 @@ var XFrame = {
 		deftimeout		: 4000,
 		interval			: 0,
 		pauseonerr		: true,
-		defwarn				: 'press <a href="javascript:window.location.reload()">reload</a> to see changes',
-		init					: function() {
-			var $ = jQuery;
-			var $head = $('#table_id_manage_resource thead tr.rowHeaders');
-			var numcols = $head.children().length
-			$head.before('<tr id="xframe-warn"><td colspan="20" id="xframe-warn-content"></td></tr>')
-		}
+		defwarn				: 'WARNING',
+		init					: function() {}
 	},
 	
 	timer		: null,
@@ -50,25 +46,34 @@ var XFrame = {
 	
 	current	: null,
 	
+	setup	: function(config) {
+		var $ = jQuery;
+		this.config = 	$.extend(this.config,config);
+	},
+	
 	init	: function() {
 		var $ = jQuery;
 		
 		if (this.config.init) this.config.init();
 		
-		if (!$('#xframe-warn').length) {
-			$('body').append('<div id="xframe-warn"><div id="xframe-warn-content"></div></div>');	
+		if (this.config.css) {
+			$('head').append('<link rel="stylesheet" type="text/css" href="'+this.config.css+'">');
 		}
-		$('#xframe-warn').on('click',function() { XFrame.unwarn(); });
+		
+		if (!$('#xframe-warn').length) {
+			$('body').append('<div id="xframe-warn" class="xframe-window"><div id="xframe-warn-content"></div></div>');	
+		}
+		$('#xframe-warn').on('click',function() { xFrame.unwarn(); });
 
 		if (!$('#xframe').length) {
-			$('body').append('<div id="xframe"><header><div id="xframe-close"></div><div id="xframe-queue"></div><div id="xframe-status"></div></header><iframe name="xframe-content"></iframe></div>');	
+			$('body').append('<div id="xframe"  class="xframe-window"><header class="xframe-header"><div id="xframe-close"></div><div id="xframe-queue"></div><div id="xframe-status"></div></header><iframe name="xframe-content"></iframe></div>');	
 		}
-		$('#xframe').on('click',function() { XFrame.dismiss(); });
+		$('#xframe').on('click',function() { xFrame.dismiss(); });
 		
-		XFrame.$xframe 	= $('#xframe');
-		XFrame.$iframe 	= $('#xframe iframe');
-		XFrame.$status 	= $('#xframe-status');
-		XFrame.$queue 	= $('#xframe-queue');
+		xFrame.$xframe 	= $('#xframe');
+		xFrame.$iframe 	= $('#xframe iframe');
+		xFrame.$status 	= $('#xframe-status');
+		xFrame.$queue 	= $('#xframe-queue');
 		
 	},
 	
@@ -90,7 +95,7 @@ var XFrame = {
 			this.$queue.text('('+this.todo.length+')');
 			if (!this.current) this.next();
 		} else {
-			this.warn('Error: XFrame called without a link');
+			this.warn('Error: xFrame called without a link');
 		}
 	},
 	
@@ -103,10 +108,10 @@ var XFrame = {
 			else this.post(this.current.link);
 			this.$xframe.removeClass('error success').addClass('pending');	
 			this.$status.text('pending..');
-			XFrame.show();
+			xFrame.show();
 			// the page called should return
-			// parent.XFrame.success() or
-			// parent.XFrame.error()		
+			// parent.xFrame.success() or
+			// parent.xFrame.error()		
 		} else {
 			this.current=null;
 		}
@@ -115,11 +120,13 @@ var XFrame = {
 	post : function(link) {
 		var parts = link.split('?');
 		var url = parts[0];
-		var params = parts[1].split('&');
 		var pp, inputs = '';
-		for(var i = 0, n = params.length; i < n; i++) {
-				pp = params[i].split('=');
-				inputs += '<input type="hidden" name="' + pp[0] + '" value="' + pp[1] + '" />';
+		if (parts[1]) {
+			var params = parts[1].split('&');
+			for(var i = 0, n = params.length; i < n; i++) {
+					pp = params[i].split('=');
+					inputs += '<input type="hidden" name="' + pp[0] + '" value="' + pp[1] + '" />';
+			}
 		}
 		if (!$('#xframe-post').length) {
 			$("body").append('<form method="post" id="xframe-post" target="xframe-content">');
@@ -134,11 +141,11 @@ var XFrame = {
 		if (this.current.timeout) {
 			clearTimeout(this.timer);
 			this.timer = setTimeout(function() {
-				XFrame.hide();
+				xFrame.hide();
 			},this.current.timeout);
 		}
 		setTimeout(function() {
-			XFrame.next();
+			xFrame.next();
 		}, this.config.interval);
 	},
 	
@@ -154,11 +161,11 @@ var XFrame = {
 			if (this.current.timeout) {
 				clearTimeout(this.timer);
 				this.timer = setTimeout(function() {
-					XFrame.hide();
+					xFrame.hide();
 				},this.current.timeout);
 			}
 			setTimeout(function() {
-				XFrame.next();
+				xFrame.next();
 			}, this.config.interval);
 		}
 	},
@@ -191,7 +198,7 @@ var XFrame = {
 		if (timeout) {
 			clearTimeout(this.warntimer);
 			this.warnTimer = setTimeout(function() {
-				XFrame.unwarn()
+				xFrame.unwarn()
 			},timeout);
 		}
 	},

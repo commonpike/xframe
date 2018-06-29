@@ -1,10 +1,27 @@
+.xframe-header {
+	background-color:#eee; 
+}
+.xframe-window {
+	border:4px solid #eee; 	
+	background-color:#eee; 
+}
+.xframe-window.pending {
+	background-color:#dddddd;
+}
+.xframe-window.success {
+	background-color:#bbffbb; 	
+}
+.xframe-window.error {
+	background-color:#ffbbbb; 	
+}
+
+
 #xframe-warn			{ 
 	position:fixed;
 	width:80%; 
 	left:10%;
 	top:1em;
 	height:1em; 
-	border:4px solid #eee; 	
 }
 
 #xframe 					{ 
@@ -13,31 +30,26 @@
 	left:10%;
 	top:3em;
 	height:6em; 	
-	border:4px solid #eee; 	
 	border-top:0;
 }
-
-
 
 #xframe 					{ 
 	display:none; 
 }
 #xframe.pending 	{ 
 	display:block; 
-	background-color:#dddddd; 	
+	 	
 }
 #xframe.success 	{ 
 	display:block; 
-	background-color:#bbffbb; 	
+	
 }
 #xframe.error 		{ 
 	display:block; 
-	background-color:#ffbbbb; 		
 }
 	#xframe header 	{ 
 		cursor:pointer;
 		height:1em; padding:.5em 0 .5em .5em; 
-		background-color:#eee; 
 		font-size:small;
 		line-height:1em;
 	}
